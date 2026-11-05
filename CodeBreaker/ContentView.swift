@@ -12,18 +12,6 @@ struct ContentView: View {
     }
 }
 
-struct PlayPegs: View {
-    var pegColors: [Color]
-    var body: some View {
-        HStack {
-            ForEach(pegColors.indices, id: \.self) {
-                RoundedRectangle(cornerRadius: 12)
-                    .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(pegColors[$0])
-            }
-        }
-    }
-}
 
 #Preview {
     ContentView()
