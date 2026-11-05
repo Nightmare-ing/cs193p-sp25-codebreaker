@@ -4,14 +4,21 @@ import Playgrounds
 struct ContentView: View {
     var body: some View {
         VStack {
-            PlayPegs(pegColors: [.red, .blue, .red, .green])
-            PlayPegs(pegColors: [.blue, .yellow, .red, .blue])
-            PlayPegs(pegColors: [.yellow, .yellow, .blue, .green])
-            PlayPegs(pegColors: [.red, .blue, .blue, .green])
+            HStack {
+                PlayPegs(pegColors: [.red, .blue, .red, .green])
+            }
+            HStack {
+                PlayPegs(pegColors: [.blue, .yellow, .red, .blue])
+            }
+            HStack {
+                PlayPegs(pegColors: [.yellow, .yellow, .blue, .green])
+            }
+            HStack {
+                PlayPegs(pegColors: [.red, .blue, .red, .green])
+            }
         }.padding()
     }
 }
-
 
 #Preview {
     ContentView()

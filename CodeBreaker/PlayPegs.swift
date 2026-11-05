@@ -16,6 +16,23 @@ struct PlayPegs: View {
                     .aspectRatio(1, contentMode: .fit)
                     .foregroundStyle(pegColors[$0])
             }
+            MatchMarkers()
+
+        }
+    }
+}
+
+private struct MatchMarkers: View {
+    var body: some View {
+        VStack {
+            HStack {
+                Circle()
+                Circle()
+            }
+            HStack {
+                Circle()
+                Circle()
+            }
         }
     }
 }
