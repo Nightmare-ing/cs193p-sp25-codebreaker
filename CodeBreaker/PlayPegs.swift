@@ -16,25 +16,44 @@ struct PlayPegs: View {
                     .aspectRatio(1, contentMode: .fit)
                     .foregroundStyle(pegColors[$0])
             }
-            MatchMarkers()
+            MatchMarkers(matches: [.exact, .exact, .inexact, .nomatch])
 
         }
     }
 }
 
 private struct MatchMarkers: View {
+    var matches: [Match]
     var body: some View {
         VStack {
             HStack {
-                Circle()
-                Circle()
+                matchMarker(with: 0)
+                matchMarker(with: 1)
             }
             HStack {
-                Circle()
-                Circle()
+                matchMarker(with: 2)
+                matchMarker(with: 3)
             }
         }
     }
+    
+    func matchMarker(with pegIdx: Int) -> some View {
+        let exactNum = self.matches.count { $0 == .exact }
+        let matchCnt = self.matches.count { $0 != .nomatch }
+        
+        return Circle()
+                .fill(pegIdx < exactNum ? .primary : Color.clear)
+                .strokeBorder(pegIdx < matchCnt ? .primary : Color.clear, lineWidth: 3)
+                .aspectRatio(1, contentMode: .fit)
+                .opacity(pegIdx < matchCnt ? 1 : 0)
+    }
+    
+}
+
+private enum Match {
+    case nomatch
+    case inexact
+    case exact
 }
 
 #Preview {
