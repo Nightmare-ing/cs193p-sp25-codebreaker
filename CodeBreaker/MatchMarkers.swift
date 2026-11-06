@@ -25,15 +25,16 @@ struct MatchMarkers: View {
         }
     }
     
+    @ViewBuilder
     func matchMarker(with pegIdx: Int) -> some View {
         let exactNum = self.matches.count { $0 == .exact }
         let matchCnt = self.matches.count { $0 != .nomatch }
         
-        return Circle()
-                .fill(pegIdx < exactNum ? .primary : Color.clear)
-                .strokeBorder(pegIdx < matchCnt ? .primary : Color.clear, lineWidth: 3)
-                .aspectRatio(1, contentMode: .fit)
-                .opacity(pegIdx < matchCnt ? 1 : 0)
+        Circle()
+            .fill(pegIdx < exactNum ? .primary : Color.clear)
+            .strokeBorder(pegIdx < matchCnt ? .primary : Color.clear, lineWidth: 3)
+            .aspectRatio(1, contentMode: .fit)
+            .opacity(pegIdx < matchCnt ? 1 : 0)
     }
     
 }
