@@ -10,14 +10,17 @@ import SwiftUI
 struct MatchMarkers: View {
     var matches: [Match]
     var body: some View {
-        HStack {
-            VStack {
-                matchMarker(with: 0)
-                matchMarker(with: 1)
+        let totalMarkers = (matches.count + 1) / 2 * 2
+        VStack {
+            HStack {
+                ForEach(0..<totalMarkers / 2, id: \.self) { idx in
+                    matchMarker(with: idx)
+                }
             }
-            VStack {
-                matchMarker(with: 2)
-                matchMarker(with: 3)
+            HStack {
+                ForEach(totalMarkers / 2..<totalMarkers, id: \.self) { idx in
+                    matchMarker(with: idx)
+                }
             }
         }
     }
@@ -43,29 +46,35 @@ enum Match {
 
 #Preview {
     VStack {
-//        HStack {
-//            ForEach(0..<3, id: \.self) { _ in
-//                Circle()
-//            }
-//            MatchMarkers(matches: [.exact, .inexact, .inexact, .nomatch])
-//        }
-//        HStack {
-//            ForEach(0..<3, id: \.self) { _ in
-//                Circle()
-//            }
-//            MatchMarkers(matches: [.exact, .nomatch, .nomatch, .nomatch])
-//        }
+        HStack {
+            ForEach(0..<3, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .inexact, .inexact])
+        }
+        HStack {
+            ForEach(0..<3, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .nomatch, .nomatch])
+        }
         HStack {
             ForEach(0..<4, id: \.self) { _ in
                 Circle()
             }
             MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
         }
-//        HStack {
-//            ForEach(0..<6, id: \.self) { _ in
-//                Circle()
-//            }
-//            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
-//        }
+        HStack {
+            ForEach(0..<5, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .nomatch])
+        }
+        HStack {
+            ForEach(0..<6, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .exact, .exact])
+        }
     }.padding()
 }
