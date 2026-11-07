@@ -42,64 +42,31 @@ enum Match {
     case exact
 }
 
+struct MatchMarkersPreview: View {
+    let matches: [Match]
+    var body: some View {
+        HStack {
+            ForEach(0..<matches.count, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: matches)
+        }.padding()
+    }
+}
+
 #Preview {
     VStack(alignment: .leading) {
-        HStack {
-            ForEach(0..<3, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .inexact, .inexact])
-        }.padding()
-        HStack {
-            ForEach(0..<3, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .nomatch, .nomatch])
-        }.padding()
+        MatchMarkersPreview(matches: [.exact, .inexact, .inexact])
+        MatchMarkersPreview(matches: [.exact, .nomatch, .nomatch])
 
-        HStack {
-            ForEach(0..<4, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
-        }.padding()
-        HStack {
-            ForEach(0..<4, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
-        }.padding()
-        HStack {
-            ForEach(0..<4, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
-        }.padding()
+        MatchMarkersPreview(matches: [.exact, .exact, .inexact, .inexact])
+        MatchMarkersPreview(matches: [.exact, .exact, .inexact, .nomatch])
+        MatchMarkersPreview(matches: [.exact, .inexact, .nomatch, .nomatch])
 
-        HStack {
-            ForEach(0..<6, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .exact, .exact])
-        }.padding()
-        HStack {
-            ForEach(0..<6, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .exact, .exact])
-        }.padding()
+        MatchMarkersPreview(matches: [.exact, .exact, .exact, .inexact, .nomatch, .nomatch])
+        MatchMarkersPreview(matches: [.exact, .exact, .inexact, .inexact, .inexact, .exact])
 
-        HStack {
-            ForEach(0..<5, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .nomatch])
-        }.padding()
-        HStack {
-            ForEach(0..<5, id: \.self) { _ in
-                Circle()
-            }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .nomatch])
-        }.padding()
+        MatchMarkersPreview(matches: [.exact, .exact, .inexact, .inexact, .inexact])
+        MatchMarkersPreview(matches: [.exact, .inexact, .inexact, .nomatch, .nomatch])
     }
 }
