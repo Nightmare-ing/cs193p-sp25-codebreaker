@@ -10,21 +10,21 @@ import SwiftUI
 struct MatchMarkers: View {
     var matches: [Match]
     var body: some View {
-        let totalMarkers = (matches.count + 1) / 2 * 2
+        let halfMarkers = (matches.count + 1) / 2
         VStack {
             HStack {
-                ForEach(0..<totalMarkers / 2, id: \.self) { idx in
+                ForEach(0..<halfMarkers, id: \.self) { idx in
                     matchMarker(with: idx)
                 }
             }
             HStack {
-                ForEach(totalMarkers / 2..<totalMarkers, id: \.self) { idx in
+                ForEach(halfMarkers..<halfMarkers * 2, id: \.self) { idx in
                     matchMarker(with: idx)
                 }
             }
         }
     }
-    
+
     @ViewBuilder
     func matchMarker(with pegIdx: Int) -> some View {
         let exactNum = self.matches.count { $0 == .exact }
@@ -46,36 +46,63 @@ enum Match {
 }
 
 #Preview {
-    VStack {
+    VStack(alignment: .leading) {
         HStack {
             ForEach(0..<3, id: \.self) { _ in
                 Circle()
             }
             MatchMarkers(matches: [.exact, .inexact, .inexact])
-        }
+        }.padding()
         HStack {
             ForEach(0..<3, id: \.self) { _ in
                 Circle()
             }
             MatchMarkers(matches: [.exact, .nomatch, .nomatch])
-        }
+        }.padding()
+
         HStack {
             ForEach(0..<4, id: \.self) { _ in
                 Circle()
             }
             MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
-        }
+        }.padding()
         HStack {
-            ForEach(0..<5, id: \.self) { _ in
+            ForEach(0..<4, id: \.self) { _ in
                 Circle()
             }
-            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .nomatch])
-        }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
+        }.padding()
+        HStack {
+            ForEach(0..<4, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact])
+        }.padding()
+
         HStack {
             ForEach(0..<6, id: \.self) { _ in
                 Circle()
             }
             MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .exact, .exact])
-        }
-    }.padding()
+        }.padding()
+        HStack {
+            ForEach(0..<6, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .exact, .exact])
+        }.padding()
+
+        HStack {
+            ForEach(0..<5, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .nomatch])
+        }.padding()
+        HStack {
+            ForEach(0..<5, id: \.self) { _ in
+                Circle()
+            }
+            MatchMarkers(matches: [.exact, .exact, .inexact, .inexact, .nomatch])
+        }.padding()
+    }
 }
