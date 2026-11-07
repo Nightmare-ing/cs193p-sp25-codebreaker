@@ -10,16 +10,13 @@ import SwiftUI
 struct MatchMarkers: View {
     var matches: [Match]
     var body: some View {
-        let halfMarkers = (matches.count + 1) / 2
-        VStack {
-            HStack {
-                ForEach(0..<halfMarkers, id: \.self) { idx in
-                    matchMarker(with: idx)
-                }
-            }
-            HStack {
-                ForEach(halfMarkers..<halfMarkers * 2, id: \.self) { idx in
-                    matchMarker(with: idx)
+        let markerPlaceholders = (matches.count + 1) / 2 * 2
+        HStack {
+            ForEach(0..<markerPlaceholders/2, id: \.self) { colIdx in
+                VStack {
+                    ForEach((2 * colIdx)..<(2 * colIdx + 2), id: \.self) { idx in
+                        matchMarker(with: idx)
+                    }
                 }
             }
         }
