@@ -17,7 +17,6 @@ struct PlayPegs: View {
                     .foregroundStyle(pegColors[$0])
             }
             MatchMarkers(matches: [.exact, .exact, .inexact, .nomatch])
-
         }
     }
 }

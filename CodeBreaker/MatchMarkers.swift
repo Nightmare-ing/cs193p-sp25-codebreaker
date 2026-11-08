@@ -10,6 +10,8 @@ import SwiftUI
 struct MatchMarkers: View {
     var matches: [Match]
     var body: some View {
+        // if there're odd number of pegs, still add even number of markers, but
+        // the last one has opacity 0
         let markerPlaceholders = (matches.count + 1) / 2 * 2
         HStack {
             ForEach(0..<markerPlaceholders/2, id: \.self) { colIdx in
@@ -42,6 +44,10 @@ enum Match {
     case exact
 }
 
+
+/*
+ View for enhanced previewing in Canvas
+ */
 struct MatchMarkersPreview: View {
     let matches: [Match]
     var body: some View {
