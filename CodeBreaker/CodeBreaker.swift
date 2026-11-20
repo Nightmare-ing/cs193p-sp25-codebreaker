@@ -16,6 +16,11 @@ struct CodeBreaker {
     var attempts: [Code] = []
     var pegChoices: [Peg] = [.red, .blue, .green, .yellow, .brown]
     
+    mutating func changeGuessPeg(at idx: Int) {
+        let originalPegIdxInChoices = pegChoices.firstIndex(of: guessCode.pegs[idx]) ?? 0
+        let newPegIdxInChoices = (originalPegIdxInChoices + 1) % pegChoices.count
+        guessCode.pegs[idx] = pegChoices[newPegIdxInChoices]
+    }
 }
 
 struct Code {

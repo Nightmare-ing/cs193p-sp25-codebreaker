@@ -2,12 +2,14 @@ import SwiftUI
 import Playgrounds
 
 struct CodeBreakerView: View {
-    var game = CodeBreaker()
+    @State var game = CodeBreaker()
     
     var body: some View {
         VStack {
             CodeView(code: game.masterCode)
-            CodeView(code: game.guessCode)
+            CodeView(code: game.guessCode) { idx in
+                game.changeGuessPeg(at: idx)
+            }
             ForEach(game.attempts.indices, id: \.self) { idx in
                 CodeView(code: game.attempts[idx])
             }

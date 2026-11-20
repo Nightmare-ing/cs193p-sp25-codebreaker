@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct CodeView: View {
-    var code: Code
+    let code: Code
+    var onPegTap: ((Int) -> Void)? = nil
+
     var body: some View {
         HStack {
-            ForEach(code.pegs.indices, id: \.self) {
+            ForEach(code.pegs.indices, id: \.self) { idx in
                 RoundedRectangle(cornerRadius: 12)
                     .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(code.pegs[$0])
+                    .foregroundStyle(code.pegs[idx])
+                    .onTapGesture {
+                        if let onPegTap {
+                            onPegTap(idx)
+                        }
+                    }
             }
             MatchMarkersView(matches: [.exact, .exact, .inexact, .nomatch])
         }
