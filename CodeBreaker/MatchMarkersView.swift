@@ -1,5 +1,5 @@
 //
-//  MatchMarkers.swift
+//  MatchMarkersView.swift
 //  CodeBreaker
 //
 //  Created by Qingsong Hu on 2026/11/6.
@@ -7,7 +7,7 @@
 import SwiftUI
 
 
-struct MatchMarkers: View {
+struct MatchMarkersView: View {
     var matches: [Match]
     var body: some View {
         // if there're odd number of pegs, still add even number of markers, but
@@ -55,7 +55,7 @@ struct MatchMarkersPreview: View {
             ForEach(0..<matches.count, id: \.self) { _ in
                 Circle()
             }
-            MatchMarkers(matches: matches)
+            MatchMarkersView(matches: matches)
         }.padding()
     }
 }

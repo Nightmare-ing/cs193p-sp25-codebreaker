@@ -1,20 +1,20 @@
 import SwiftUI
 import Playgrounds
 
-struct ContentView: View {
+struct CodeBreakerView: View {
     var game = CodeBreaker()
     
     var body: some View {
         VStack {
-            PlayPegs(pegColors: game.masterCode.pegs)
-            PlayPegs(pegColors: game.guessCode.pegs)
+            CodeView(code: game.masterCode)
+            CodeView(code: game.guessCode)
             ForEach(game.attempts.indices, id: \.self) { idx in
-                PlayPegs(pegColors: game.attempts[idx].pegs)
+                CodeView(code: game.attempts[idx])
             }
         }.padding()
     }
 }
 
 #Preview {
-    ContentView()
+    CodeBreakerView()
 }
