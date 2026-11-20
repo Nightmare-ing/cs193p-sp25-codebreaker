@@ -11,8 +11,8 @@ import SwiftUI
 typealias Peg = Color
 
 struct CodeBreaker {
-    var masterCode = Code(pegs: [.red, .blue, .red, .green])
-    var guessCode: Code = Code(pegs: [.blue, .red, .green, .red])
+    var masterCode = Code(pegs: [.red, .blue, .red, .green], kind: .master)
+    var guessCode: Code = Code(pegs: [.blue, .red, .green, .red], kind: .guess)
     var attempts: [Code] = []
     var pegChoices: [Peg] = [.red, .blue, .green, .yellow, .brown]
     
@@ -25,4 +25,11 @@ struct CodeBreaker {
 
 struct Code {
     var pegs: [Peg]
+    var kind: Kind? = nil
+    
+    enum Kind {
+        case master
+        case guess
+        case attempt
+    }
 }
