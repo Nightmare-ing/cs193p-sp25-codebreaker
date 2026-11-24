@@ -24,28 +24,8 @@ struct CodeBreaker {
 
     mutating func addAttempt() {
         var attemptCode = guessCode
-        attemptCode.kind = .attempt(match(attemptCode))
+        attemptCode.kind = .attempt(guessCode.matchAgainst(masterCode))
         attemptsCode.append(attemptCode)
-    }
-
-    func match(_ code: Code) -> [Match] {
-        var result: [Match]  = code.pegs.indices.map {
-            code.pegs[$0] == masterCode.pegs[$0] ? .exact : .nomatch
-        }
-        var filteredMasterCode = masterCode.pegs.indices.filter {
-            result[$0] != .exact
-        }.map {
-            masterCode.pegs[$0]
-        }
-
-        for i in 0..<result.count where result[i] != .exact {
-            if let inExactMatchIdx = filteredMasterCode.firstIndex(of: code.pegs[i]) {
-                filteredMasterCode.remove(at: inExactMatchIdx)
-                result[i] = .inexact
-            }
-        }
-
-        return result
     }
 }
 
@@ -57,5 +37,25 @@ struct Code {
         case master
         case guess
         case attempt([Match])
+    }
+    
+    func matchAgainst(_ code: Code) -> [Match] {
+        var result: [Match]  = pegs.indices.map {
+            pegs[$0] == code.pegs[$0] ? .exact : .nomatch
+        }
+        var filteredMasterCode = code.pegs.indices.filter {
+            result[$0] != .exact
+        }.map {
+            code.pegs[$0]
+        }
+
+        for i in 0..<result.count where result[i] != .exact {
+            if let inExactMatchIdx = filteredMasterCode.firstIndex(of: pegs[i]) {
+                filteredMasterCode.remove(at: inExactMatchIdx)
+                result[i] = .inexact
+            }
+        }
+
+        return result
     }
 }
