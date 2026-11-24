@@ -10,11 +10,21 @@ import SwiftUI
 
 typealias Peg = Color
 
+extension Peg {
+    static let missing = Color.clear
+}
+
 struct CodeBreaker {
-    var masterCode = Code(pegs: [.red, .blue, .red, .green], kind: .master)
-    var guessCode: Code = Code(pegs: [.blue, .red, .green, .red], kind: .guess)
+    var masterCode = Code(kind: .master)
+    var guessCode: Code = Code(kind: .guess)
     var attemptsCode: [Code] = []
-    var pegChoices: [Peg] = [.red, .blue, .green, .yellow, .brown]
+    var pegChoices: [Peg]
+
+    init(pegChoices: [Peg]) {
+        self.pegChoices = pegChoices
+        masterCode.randomize(from: pegChoices)
+        print(masterCode)
+    }
     
     mutating func changeGuessPeg(at idx: Int) {
         let originalPegIdxInChoices = pegChoices.firstIndex(of: guessCode.pegs[idx]) ?? 0
@@ -24,13 +34,13 @@ struct CodeBreaker {
 
     mutating func addAttempt() {
         var attemptCode = guessCode
-        attemptCode.kind = .attempt(guessCode.matchAgainst(masterCode))
+        attemptCode.kind = .attempt(guessCode.match(against: masterCode))
         attemptsCode.append(attemptCode)
     }
 }
 
 struct Code {
-    var pegs: [Peg]
+    var pegs: [Peg] = Array(repeating: .missing, count: 4)
     var kind: Kind? = nil
     
     enum Kind {
@@ -39,7 +49,13 @@ struct Code {
         case attempt([Match])
     }
     
-    func matchAgainst(_ code: Code) -> [Match] {
+    mutating func randomize(from choices: [Peg]) {
+        for idx in pegs.indices {
+            pegs[idx] = choices.randomElement() ?? Peg.missing
+        }
+    }
+
+    func match(against code: Code) -> [Match] {
         var result: [Match]  = pegs.indices.map {
             pegs[$0] == code.pegs[$0] ? .exact : .nomatch
         }

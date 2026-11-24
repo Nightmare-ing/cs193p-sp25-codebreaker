@@ -28,6 +28,13 @@ struct CodeView: View {
                 RoundedRectangle(cornerRadius: 12)
                     .aspectRatio(1, contentMode: .fit)
                     .foregroundStyle(code.pegs[idx])
+                    .overlay {
+                        if code.pegs[idx] == .missing {
+                            RoundedRectangle(cornerRadius: 10)
+                                .strokeBorder(.gray)
+                        }
+                    }
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         onPegTap?(idx)
                     }
@@ -51,6 +58,8 @@ struct CodeView: View {
 
 #Preview {
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow]))
+    CodeView(code: Code(pegs: [.missing, .missing, .missing, .missing]))
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .guess))
+    CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
 }
