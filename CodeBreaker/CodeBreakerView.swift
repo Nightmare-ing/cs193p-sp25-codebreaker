@@ -7,15 +7,15 @@ struct CodeBreakerView: View {
     var body: some View {
         VStack {
             CodeView(code: game.masterCode)
-            ScrollView {
-                CodeView(code: game.guessCode) { idx in
-                    game.changeGuessPeg(at: idx)
-                } onButtonTap: {
-                    withAnimation {
-                        game.addAttempt()
-                    }
+            CodeView(code: game.guessCode) { idx in
+                game.changeGuessPeg(at: idx)
+            } onButtonTap: {
+                withAnimation {
+                    game.addAttempt()
                 }
+            }
 
+            ScrollView {
                 ForEach(game.attemptsCode.indices.reversed(), id: \.self) { idx in
                     CodeView(code: game.attemptsCode[idx])
                 }
