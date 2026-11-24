@@ -12,6 +12,7 @@ struct CodeView: View {
     var onPegTap: ((Int) -> Void)? = nil
     var onButtonTap: (() -> Void)? = nil
 
+
     private var guessButton: some View {
         Button("Guess") {
             onButtonTap?()
@@ -38,8 +39,8 @@ struct CodeView: View {
                     switch code.kind {
                     case .guess:
                         guessButton
-                    case .attempt:
-                        MatchMarkersView(matches: [.exact, .inexact, .exact, .nomatch])
+                    case .attempt(let matches):
+                        MatchMarkersView(matches: matches)
                     default:
                         EmptyView()
                     }
@@ -51,5 +52,5 @@ struct CodeView: View {
 #Preview {
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow]))
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .guess))
-    CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .attempt))
+    CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
 }
