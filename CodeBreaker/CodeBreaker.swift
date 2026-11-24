@@ -21,6 +21,12 @@ struct CodeBreaker {
         let newPegIdxInChoices = (originalPegIdxInChoices + 1) % pegChoices.count
         guessCode.pegs[idx] = pegChoices[newPegIdxInChoices]
     }
+
+    mutating func addAttempt() {
+        var attemptCode = guessCode
+        attemptCode.kind = .attempt
+        attempts.append(attemptCode)
+    }
 }
 
 struct Code {
