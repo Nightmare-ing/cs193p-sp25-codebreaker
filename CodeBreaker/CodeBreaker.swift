@@ -17,7 +17,7 @@ extension Peg {
 struct CodeBreaker {
     var masterCode = Code(kind: .master)
     var guessCode: Code = Code(kind: .guess)
-    var attemptsCode: [Code] = []
+    var attemptCodes: [Code] = []
     var pegChoices: [Peg]
 
     init(pegChoices: [Peg]) {
@@ -33,17 +33,19 @@ struct CodeBreaker {
     }
 
     mutating func addAttempt() {
-        var attemptCode = guessCode
-        attemptCode.kind = .attempt(guessCode.match(against: masterCode))
-        attemptsCode.append(attemptCode)
+        var attempt = guessCode
+        attempt.kind = .attempt(guessCode.match(against: masterCode))
+        if attempt.pegs != Array(repeating: .missing, count: 4), !attemptCodes.contains(attempt) {
+            attemptCodes.append(attempt)
+        }
     }
 }
 
-struct Code {
+struct Code: Equatable {
     var pegs: [Peg] = Array(repeating: .missing, count: 4)
     var kind: Kind? = nil
     
-    enum Kind {
+    enum Kind: Equatable {
         case master
         case guess
         case attempt([Match])

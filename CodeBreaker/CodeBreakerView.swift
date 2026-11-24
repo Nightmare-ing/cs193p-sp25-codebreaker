@@ -16,8 +16,8 @@ struct CodeBreakerView: View {
             }
 
             ScrollView {
-                ForEach(game.attemptsCode.indices.reversed(), id: \.self) { idx in
-                    CodeView(code: game.attemptsCode[idx])
+                ForEach(game.attemptCodes.indices.reversed(), id: \.self) { idx in
+                    CodeView(code: game.attemptCodes[idx])
                 }
             }
         }.padding()
