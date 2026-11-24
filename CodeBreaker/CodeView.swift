@@ -12,6 +12,15 @@ struct CodeView: View {
     var onPegTap: ((Int) -> Void)? = nil
     var onButtonTap: (() -> Void)? = nil
 
+    private var guessButton: some View {
+        Button("Guess") {
+            onButtonTap?()
+        }
+        .font(.system(size: 80))
+        .minimumScaleFactor(0.1)
+        .fontWeight(.bold)
+    }
+
     var body: some View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { idx in
@@ -22,31 +31,25 @@ struct CodeView: View {
                         onPegTap?(idx)
                     }
             }
-            switch code.kind {
-            case .attempt:
-                MatchMarkersView(matches: [.exact, .exact, .inexact, .nomatch])
-            case .master, nil:
-                Rectangle()
-                    .fill(.clear)
-                    .aspectRatio(1, contentMode: .fit)
-            case .guess:
-                Rectangle()
-                    .fill(.clear)
-                    .aspectRatio(1, contentMode: .fit)
-                    .overlay {
-                        Button("Guess") {
-                            onButtonTap?()
-                        }
-                        .font(.system(size: 80))
-                        .minimumScaleFactor(0.1)
-                        .fontWeight(.bold)
+            Rectangle()
+                .foregroundStyle(.clear)
+                .aspectRatio(contentMode: .fit)
+                .overlay {
+                    switch code.kind {
+                    case .guess:
+                        guessButton
+                    case .attempt:
+                        MatchMarkersView(matches: [.exact, .inexact, .exact, .nomatch])
+                    default:
+                        EmptyView()
                     }
-            }
+                }
         }
     }
 }
 
 #Preview {
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow]))
+    CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .guess))
     CodeView(code: Code(pegs: [.red, .blue, .green, .yellow], kind: .attempt))
 }
