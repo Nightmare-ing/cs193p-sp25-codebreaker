@@ -15,14 +15,18 @@ extension Peg {
 }
 
 struct CodeBreaker {
-    var masterCode = Code(kind: .master)
-    var guessCode: Code = Code(kind: .guess)
+    var numberOfPegs = 4
+    var masterCode: Code
+    var guessCode: Code
     var attemptCodes: [Code] = []
     var pegChoices: [Peg]
 
     init(pegChoices: [Peg]) {
         self.pegChoices = pegChoices
+        numberOfPegs = Int.random(in: 3...6)
+        masterCode = Code(kind: .master, numOfPegs: numberOfPegs)
         masterCode.randomize(from: pegChoices)
+        guessCode = Code(kind: .guess, numOfPegs: numberOfPegs)
         print(masterCode)
     }
     
@@ -35,15 +39,13 @@ struct CodeBreaker {
     mutating func addAttempt() {
         var attempt = guessCode
         attempt.kind = .attempt(guessCode.match(against: masterCode))
-        if attempt.pegs != Array(repeating: .missing, count: 4), !attemptCodes.contains(attempt) {
+        if !attempt.pegs.allSatisfy({ $0 == .missing }), !attemptCodes.contains(attempt) {
             attemptCodes.append(attempt)
         }
     }
 
     mutating func restartGame() {
-        masterCode.randomize(from: pegChoices)
-        guessCode = Code(kind: .guess)
-        attemptCodes = []
+        self = CodeBreaker(pegChoices: pegChoices)
     }
 }
 
@@ -57,10 +59,27 @@ struct Code: Equatable {
         case attempt([Match])
     }
     
+    init(pegs: [Peg]) {
+        self.pegs = pegs
+    }
+    
+    init(pegs: [Peg], kind: Kind) {
+        self.pegs = pegs
+    }
+
+    init(kind: Kind, numOfPegs: Int) {
+        pegs = Array(repeating: .missing, count: numOfPegs)
+        self.kind = kind
+    }
+    
     mutating func randomize(from choices: [Peg]) {
         for idx in pegs.indices {
             pegs[idx] = choices.randomElement() ?? Peg.missing
         }
+    }
+    
+    mutating func clearAll() {
+        pegs = Array(repeating: .clear, count: pegs.count)
     }
 
     func match(against code: Code) -> [Match] {
