@@ -6,13 +6,7 @@
 //
 
 import Foundation
-import SwiftUI
 
-typealias Peg = Color
-
-extension Peg {
-    static let missing = Color.clear
-}
 
 struct CodeBreaker {
     var numberOfPegs = 4
@@ -49,6 +43,11 @@ struct CodeBreaker {
     }
 }
 
+struct Peg: Equatable {
+    var content: String
+    static let missing = Peg(content: ".missing")
+}
+
 struct Code: Equatable {
     var pegs: [Peg] = Array(repeating: .missing, count: 4)
     var kind: Kind? = nil
@@ -79,7 +78,7 @@ struct Code: Equatable {
     }
     
     mutating func clearAll() {
-        pegs = Array(repeating: .clear, count: pegs.count)
+        pegs = Array(repeating: .missing, count: pegs.count)
     }
 
     func match(against code: Code) -> [Match] {
