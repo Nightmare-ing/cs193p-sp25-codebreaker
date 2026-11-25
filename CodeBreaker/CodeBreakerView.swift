@@ -20,6 +20,9 @@ struct CodeBreakerView: View {
                     CodeView(code: game.attemptCodes[idx])
                 }
             }
+            Button("Restart Game") {
+                game.restartGame()
+            }
         }.padding()
     }
 }
