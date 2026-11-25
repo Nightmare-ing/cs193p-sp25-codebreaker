@@ -48,10 +48,13 @@ struct CodeView: View {
     }
 }
 
+
+private let testPegs = ["red", "blue", "green", "yellow"].map { Peg(content: $0) }
+
 #Preview {
-    CodeView(code: Code(pegs: [Peg(content: "red"), Peg(content: "blue"), Peg(content: "green"), Peg(content: "yellow")]))
-    CodeView(code: Code(pegs: [.missing, .missing, .missing, .missing]))
-    CodeView(code: Code(pegs: [Peg(content: "red"), Peg(content: "blue"), Peg(content: "green"), Peg(content: "yellow")], kind: .guess))
-    CodeView(code: Code(pegs: [Peg(content: "red"), Peg(content: "blue"), Peg(content: "green"), Peg(content: "yellow")], kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
-    CodeView(code: Code(pegs: [Peg(content: "red"), Peg(content: "blue"), Peg(content: "green"), Peg(content: "yellow")], kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
+    CodeView(code: Code(pegs: testPegs))
+    CodeView(code: Code(pegs: Array(repeating: .missing, count: 4)))
+    CodeView(code: Code(pegs: testPegs, kind: .guess))
+    CodeView(code: Code(pegs: testPegs, kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
+    CodeView(code: Code(pegs: testPegs, kind: .attempt([.exact, .inexact, .nomatch, .nomatch])))
 }
