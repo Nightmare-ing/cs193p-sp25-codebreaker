@@ -15,8 +15,11 @@ struct CodeBreaker {
     var attemptCodes: [Code] = []
     var pegChoices: [Peg]
 
-    init(pegChoices: [Peg]) {
-        self.pegChoices = pegChoices
+    private let coloredPegSets = ["red", "blue", "green", "yellow", "brown"]
+    private let emojiPegSets = ["😌", "🙃", "🫪", "🤨", "😅", "🫠"]
+
+    init() {
+        self.pegChoices = Bool.random() ? coloredPegSets.map { Peg(content: $0) } : emojiPegSets.map { Peg(content: $0) }
         numberOfPegs = Int.random(in: 3...6)
         masterCode = Code(kind: .master, numOfPegs: numberOfPegs)
         masterCode.randomize(from: pegChoices)
@@ -39,13 +42,13 @@ struct CodeBreaker {
     }
 
     mutating func restartGame() {
-        self = CodeBreaker(pegChoices: pegChoices)
+        self = CodeBreaker()
     }
 }
 
 struct Peg: Equatable {
-    var content: String
-    static let missing = Peg(content: ".missing")
+    var content: String?
+    static let missing = Peg()
 }
 
 struct Code: Equatable {
@@ -64,6 +67,7 @@ struct Code: Equatable {
     
     init(pegs: [Peg], kind: Kind) {
         self.pegs = pegs
+        self.kind = kind
     }
 
     init(kind: Kind, numOfPegs: Int) {

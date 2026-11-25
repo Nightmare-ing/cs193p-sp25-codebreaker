@@ -2,7 +2,7 @@ import SwiftUI
 import Playgrounds
 
 struct CodeBreakerView: View {
-    @State var game = CodeBreaker(pegChoices: [Peg(content: "red"), Peg(content: "blue"), Peg(content: "green"), Peg(content: "yellow"), Peg(content: "brown")])
+    @State var game = CodeBreaker()
     
     var body: some View {
         VStack {

@@ -9,14 +9,6 @@ import SwiftUI
 
 struct CodeView: View {
     let code: Code
-    let supportedColors: [String:Color] = [
-        "red": .red,
-        "green": .green,
-        "blue": .blue,
-        "yellow": .yellow,
-        "orange": .orange,
-        "brown": .brown,
-    ]
     var onPegTap: ((Int) -> Void)? = nil
     var onButtonTap: (() -> Void)? = nil
 
@@ -33,15 +25,7 @@ struct CodeView: View {
     var body: some View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { idx in
-                RoundedRectangle(cornerRadius: 12)
-                    .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(supportedColors[code.pegs[idx].content] ?? .clear)
-                    .overlay {
-                        if code.pegs[idx] == .missing {
-                            RoundedRectangle(cornerRadius: 10)
-                                .strokeBorder(.gray)
-                        }
-                    }
+                PegView(peg: code.pegs[idx])
                     .contentShape(Rectangle())
                     .onTapGesture {
                         onPegTap?(idx)
