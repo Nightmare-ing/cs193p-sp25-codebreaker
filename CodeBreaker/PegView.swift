@@ -9,18 +9,10 @@ import SwiftUI
 
 struct PegView: View {
     let peg: Peg
-    private let colorsByName: [String:Color] = [
-        "red": .red,
-        "green": .green,
-        "blue": .blue,
-        "yellow": .yellow,
-        "orange": .orange,
-        "brown": .brown,
-    ]
 
     private var foregroundColor: Color {
         if let name = peg.content {
-            colorsByName[name] ?? .clear
+            Color(name: name) ?? .clear
         } else {
             .clear
         }
@@ -34,7 +26,7 @@ struct PegView: View {
                 if peg == .missing {
                     RoundedRectangle(cornerRadius: 10)
                         .strokeBorder(.gray)
-                } else if let name = peg.content, colorsByName[name] == nil {
+                } else if let name = peg.content, Color(name: name) == nil {
                     Text(name)
                         .font(.system(size: 120))
                         .minimumScaleFactor(9/120)

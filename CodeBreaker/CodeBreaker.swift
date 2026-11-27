@@ -15,11 +15,13 @@ struct CodeBreaker {
     var attemptCodes: [Code] = []
     var pegChoices: [Peg]
 
-    private let coloredPegSets = ["red", "blue", "green", "yellow", "brown"]
-    private let emojiPegSets = ["😌", "🙃", "🫪", "🤨", "😅", "🫠"]
+    private let colorPegSets: [String]
+    private let emojiPegSets: [String]
 
-    init() {
-        self.pegChoices = Bool.random() ? coloredPegSets.map { Peg(content: $0) } : emojiPegSets.map { Peg(content: $0) }
+    init(colorChoicesSet: [String], emojiChoicesSet: [String]) {
+        colorPegSets = colorChoicesSet
+        emojiPegSets = emojiChoicesSet
+        self.pegChoices = Bool.random() ? colorChoicesSet.map { Peg(content: $0) } : emojiChoicesSet.map { Peg(content: $0) }
         numberOfPegs = Int.random(in: 3...6)
         masterCode = Code(kind: .master, numOfPegs: numberOfPegs)
         masterCode.randomize(from: pegChoices)
@@ -42,7 +44,7 @@ struct CodeBreaker {
     }
 
     mutating func restartGame() {
-        self = CodeBreaker()
+        self = CodeBreaker(colorChoicesSet: colorPegSets, emojiChoicesSet: emojiPegSets)
     }
 }
 
