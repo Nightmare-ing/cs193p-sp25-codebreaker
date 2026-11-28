@@ -9,19 +9,16 @@ import Foundation
 
 
 struct CodeBreaker {
+    let themes: [[String]]
     var numberOfPegs = 4
     var masterCode: Code
     var guessCode: Code
     var attemptCodes: [Code] = []
     var pegChoices: [Peg]
 
-    private let colorPegSets: [String]
-    private let emojiPegSets: [String]
-
-    init(colorChoicesSet: [String], emojiChoicesSet: [String]) {
-        colorPegSets = colorChoicesSet
-        emojiPegSets = emojiChoicesSet
-        self.pegChoices = Bool.random() ? colorChoicesSet.map { Peg(content: $0) } : emojiChoicesSet.map { Peg(content: $0) }
+    init(themes: [[String]]) {
+        self.themes = themes
+        pegChoices = themes.randomElement()?.map { Peg(content: $0) } ?? []
         numberOfPegs = Int.random(in: 3...6)
         masterCode = Code(kind: .master, numOfPegs: numberOfPegs)
         masterCode.randomize(from: pegChoices)
@@ -44,7 +41,7 @@ struct CodeBreaker {
     }
 
     mutating func restartGame() {
-        self = CodeBreaker(colorChoicesSet: colorPegSets, emojiChoicesSet: emojiPegSets)
+        self = CodeBreaker(themes: themes)
     }
 }
 

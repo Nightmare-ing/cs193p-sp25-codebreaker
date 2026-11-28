@@ -1,9 +1,12 @@
 import SwiftUI
-import Playgrounds
 
 struct CodeBreakerView: View {
-    private static let emojiChoicesSet = ["😌", "🙃", "🫪", "🤨", "😅", "🫠"]
-    @State var game = CodeBreaker(colorChoicesSet: Color.playableNames, emojiChoicesSet: emojiChoicesSet)
+    private static let themes: [[String]] = [
+        ["😌", "🙃", "🫪", "🤨"],
+        ["🚗", "🚲", "🛩️", "⛵"],
+        Array(Color.playableNames.shuffled().prefix(4)),
+    ]
+    @State var game = CodeBreaker(themes: themes)
     
     var body: some View {
         VStack {
